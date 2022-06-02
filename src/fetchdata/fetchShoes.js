@@ -1,13 +1,14 @@
 const axios = require('axios');
 const shoes = require('../shoes/shoes');
 const randomNumber = require('../randomNumber')
+const KEY =  require('../../config.js')
 
 const options = {
     method: 'GET',
     url: 'https://shoes-collections.p.rapidapi.com/shoes',
     headers: {
       'X-RapidAPI-Host': 'shoes-collections.p.rapidapi.com',
-      'X-RapidAPI-Key': '5ce18c3657msha744b3ae8b3cc14p136d4bjsnfe9991133fd5'
+      'X-RapidAPI-Key': `${KEY}`
     }
   };
 

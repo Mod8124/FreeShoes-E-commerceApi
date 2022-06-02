@@ -16,3 +16,4 @@
 .prettierignore
 node_modules
 front__end
+.env
