@@ -23,8 +23,13 @@ const options = {
                 shoe.porcent = randomNumber(100);
                 shoe.endprice = (shoe.price - ((shoe.porcent/100 * (parseInt(shoe.price))).toFixed(2))).toFixed(2)
                 shoe.company = 'SNEAKER COMPANY'
-                shoe.genre = genre[randomNumber(2)],
-                shoes.push(shoe)
+                shoe.genre = genre[randomNumber(2)]
+                
+               shoes.forEach((shoesIndex)=> {
+                   if(shoesIndex.id !== data.id) {
+                       shoes.push(data)
+                   }
+               })
             })
             return shoes
         } 
