@@ -1,20 +1,21 @@
-const get = require('../fetchdata/fetchShoes')
+const load = require('../fetchdata/fetchShoes')
+
+const {get,shoes} = load()
+get()
 
 const index = async (req,res) => {
     try {
-        const data = await get()
-        res.status(200).send(data)
+        res.status(200).send(shoes)
       } catch(err) {
         res.status(400).json({error:"try again"})
       }
 }
 
 const details = async (req,res) => {
+  const {id} = req.params;
     try {
-        const data = await get()
-        const {id} = req.params;
         if(id) {
-       const shoe =   data.filter((shoes) => shoes.name === id)
+       const shoe =   shoes.filter((shoesO) => shoesO.name === id)
           res.status(200).json(shoe)
         } 
       } catch(err) {
@@ -24,8 +25,7 @@ const details = async (req,res) => {
 
 const getByWomen = async (req,res) => {
   try {
-    const data = await get()
-    const shoeByWomen = data.filter((shoe)=> shoe.genre === 'women')
+    const shoeByWomen = shoes.filter((shoe)=> shoe.genre === 'women')
     res.status(200).json(shoeByWomen)
   } catch(err) {
       console.log(err)
@@ -34,8 +34,7 @@ const getByWomen = async (req,res) => {
 
 const getByMen = async (req,res) => {
   try {
-    const data = await get()
-    const shoeByMen = data.filter((shoe)=> shoe.genre === 'men')
+    const shoeByMen = shoes.filter((shoe)=> shoe.genre === 'men')
     res.status(200).json(shoeByMen)
   } catch(err) {
     console.log(err)
