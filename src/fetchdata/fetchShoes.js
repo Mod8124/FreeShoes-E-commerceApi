@@ -14,13 +14,11 @@ const options = {
 
   const genre = ['men','women'];
 
-const load = () => {
-
-    const get = async () => {
+const get = async () => {
             
         try {
          const {data} = await axios.request(options)
-         if(data && shoes.length <= 32) {
+         if(data) {
              data.map(shoe => {
                  shoe.price = shoe.price.toFixed(2)
                  shoe.porcent = randomNumber(100);
@@ -28,9 +26,12 @@ const load = () => {
                  shoe.company = 'SNEAKER COMPANY'
                  shoe.genre = genre[randomNumber(2)]
                  
-                shoes.push(shoe)
+                if(shoes.length<31) {
+                    shoes.push(shoe)
+                }
              })
          } 
+         return shoes
         } catch(err) {
             if(err) {
                 return shoes
@@ -38,10 +39,5 @@ const load = () => {
             console.log(err.message)
         }
  }
- return {
-    shoes,
-    get
-}
-}
 
-module.exports = load;
+module.exports = get;

@@ -1,10 +1,9 @@
-const load = require('../fetchdata/fetchShoes')
-
-const {get,shoes} = load()
+const get = require('../fetchdata/fetchShoes')
 
 const index = async (req,res) => {
     try {
-        res.status(200).send(shoes)
+      const data = await get();
+        res.status(200).send(data)
       } catch(err) {
         res.status(400).json({error:"try again"})
       }
@@ -14,7 +13,8 @@ const details = async (req,res) => {
   const {id} = req.params;
     try {
         if(id) {
-       const shoe =   shoes.filter((shoesO) => shoesO.name === id)
+          const data = await get();
+        const shoe = data.filter((shoesO) => shoesO.name === id)
           res.status(200).json(shoe)
         } 
       } catch(err) {
