@@ -20,7 +20,7 @@ const load = () => {
             
         try {
          const {data} = await axios.request(options)
-         if(data) {
+         if(data && shoes.length <= 32) {
              data.map(shoe => {
                  shoe.price = shoe.price.toFixed(2)
                  shoe.porcent = randomNumber(100);

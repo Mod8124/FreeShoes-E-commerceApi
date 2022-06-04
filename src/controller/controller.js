@@ -1,7 +1,6 @@
 const load = require('../fetchdata/fetchShoes')
 
 const {get,shoes} = load()
-get()
 
 const index = async (req,res) => {
     try {
