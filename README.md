@@ -25,7 +25,7 @@ fetch("http://localhost:3000", requestOptions)
 
 ```
 
-###### Response
+###### Response by default
 
 ```json
 [
