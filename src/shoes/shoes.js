@@ -6,7 +6,7 @@ const genre = ['men','women']
 const prices = [250.00,50,125.00]
 
 const shoes = [
-    {id:0,name:"Fall Limited Edition Sneakers",price:prices[0].toFixed(2), image:"https://denis-munoz-baca.imgbb.com/",description:"These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.",porcent:prices[1],endprice:prices[2].toFixed(2),company:"SNEAKER COMPANY",
+    {id:0,name:"Fall Limited Edition Sneakers",price:prices[0].toFixed(2), image:"https://denis-munoz-baca.imgbb.com",description:"These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.",porcent:prices[1],endprice:prices[2].toFixed(2),company:"SNEAKER COMPANY",
     genre:genre[randomNumber(2)],
     }
 ]
