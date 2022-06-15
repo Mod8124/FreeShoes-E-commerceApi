@@ -1,4 +1,4 @@
-#shoes Collections
+# shoes Collections
 This api provides shoes collection like six or even more sometimes, I elaborated this api with help other collection of shoes
 >https://rapidapi.com/kaushiksheel9/api/shoes-collections api on rapidApi
 
@@ -8,8 +8,8 @@ This api provides shoes collection like six or even more sometimes, I elaborated
 ```node
 GET https://eccomerce-node.herokuapp.com
 ```
-####example 
-######request
+#### example 
+###### request
 
 > javascript-fetch
 ```javascript
@@ -25,7 +25,7 @@ fetch("http://localhost:3000", requestOptions)
 
 ```
 
-######Response
+###### Response
 
 ```json
 [
@@ -115,8 +115,8 @@ fetch("http://localhost:3000", requestOptions)
 GET https://eccomerce-node.herokuapp.com/api/ + name
 ```
 
-####example 
-######request
+#### example 
+###### request
 
 > javascript-fetch
 ```javascript
@@ -132,7 +132,7 @@ fetch("https://eccomerce-node.herokuapp.com/api/Fall Limited Edition Sneakers 31
 
 ```
 
-######Response
+###### Response
 
 ```json
 [
