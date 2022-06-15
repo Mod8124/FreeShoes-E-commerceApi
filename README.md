@@ -18,7 +18,7 @@ var requestOptions = {
   redirect: 'follow'
 };
  
-fetch("https://eccomerce-node.herokuapp.com", requestOptions)
+fetch("https://eccomerce-node.herokuapp.com/api", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
