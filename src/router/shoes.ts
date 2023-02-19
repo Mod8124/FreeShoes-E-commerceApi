@@ -1,6 +1,6 @@
-import { Router } from "express";
+import { Router } from 'express';
 const router = Router();
-import { index, getByWomen, getByMen, detail } from '../controller/controller';
+import { index, getByWomen, getByMen, detail } from '../controller/shoes';
 
 router.get('/shoes', index);
 router.get('/women', getByWomen);

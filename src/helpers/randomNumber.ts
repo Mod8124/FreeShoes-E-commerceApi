@@ -1,5 +1,3 @@
-const randomNumber = (n:number):number => {
-    return Math.floor(Math.random() * n);
-};
+const randomNumber = (n: number): number => Math.floor(Math.random() * n);
 
 export default randomNumber;

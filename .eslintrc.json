@@ -1,10 +1,14 @@
 {
     "env": {
         "browser": true,
+        "node": true,
         "commonjs": true,
         "es2021": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "prettier"
+    ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
@@ -13,7 +17,10 @@
             "error",
             2
         ],
-        "linebreak-style": "off",
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
         "quotes": [
             "error",
             "single"
