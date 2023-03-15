@@ -1,55 +1,72 @@
 import { Request, Response } from 'express';
-import { IShoe } from '../interface/interface';
-import shoes from '../shoes/shoes';
+import { Error } from '../helpers/error';
+import { getAllShoes, getAllShoesByGenre, getShoeByName } from '../services/shoesServices';
+import { IPagination } from '../interface/interface';
 
+// get all shoes
 export const index = async (req: Request, res: Response) => {
-  const DATA_LENGTH = 30;
-  const START = 1;
+  const { sort } = req.query;
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 15;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
 
-  // let page:number= req.query.page || START
-  // let limit: any = req.query.limit || DATA_LENGTH
-
-  // if (limit > DATA_LENGTH) limit = DATA_LENGTH;
-  // const startIndex = (page - 1) * limit;
-  // const endIndex = page * limit;
+  let pagination: IPagination = {
+    prev: {},
+    next: {},
+  };
 
   try {
-    // let shoes = data.slice(startIndex, endIndex);
-    res.status(200).send(shoes);
+    const allShoes = typeof sort === 'string' ? getAllShoes(sort) : getAllShoes(null);
+    if (startIndex > 0) {
+      pagination['prev'] = {
+        page: page - 1,
+        limit,
+      };
+    }
+
+    if (endIndex < allShoes.length) {
+      pagination['next'] = {
+        page: page + 1,
+        limit,
+      };
+    }
+    const paginationShoes = allShoes.slice(startIndex, endIndex);
+    res.status(200).send({ status: 'ok', total_shoes: allShoes.length, pagination, data: paginationShoes });
   } catch (err) {
-    res.status(400).json({ error: 'try again' });
+    res.status(404).json({ status: 'failed', ...Error, err });
   }
 };
 
+// get single shoe
 export const detail = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { shoeName } = req.params;
   try {
-    if (id) {
-      // const data: any = await get();
-      // const shoes = data.filter((shoe: IShoe) => shoe.name === id);
-      res.status(200).json('hola');
+    if (shoeName) {
+      const shoe = getShoeByName(shoeName);
+      res.status(200).json({ status: 'Ok', total_shoes: shoe.length, data: shoe });
     }
   } catch (err) {
-    res.status(400).json({ error: 'try again' });
+    res.status(404).json({ status: 'failed', ...Error, err });
   }
 };
 
+// get all shoes by women
 export const getByWomen = async (req: Request, res: Response) => {
   try {
-    // const data: any = await get();
-    // const shoeByWomen = data.filter((shoe: IShoe) => shoe.genre === 'Women');
-    res.status(200).json('hola');
+    const shoesByWomen = getAllShoesByGenre('Women');
+    res.status(200).json({ status: 'OK', total_shoes: shoesByWomen.length, data: shoesByWomen });
   } catch (err) {
-    res.status(400).json({ error: 'try again' });
+    res.status(404).json({ status: 'failed', ...Error, err });
   }
 };
 
+//get all shoes by men
 export const getByMen = async (req: Request, res: Response) => {
   try {
-    // const data: any = await get();
-    // const shoeByMen = data.filter((shoe: IShoe) => shoe.genre === 'Men');
-    res.status(200).json('hola');
+    const shoesByMen = getAllShoesByGenre('Men');
+    res.status(200).json({ status: 'Ok', total_shoes: shoesByMen.length, data: shoesByMen });
   } catch (err) {
-    res.status(400).json({ msg: 'Sorry, there is a problem' });
+    res.status(404).json({ status: 'failed', data: { ...Error, err } });
   }
 };

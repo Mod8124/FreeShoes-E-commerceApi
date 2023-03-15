@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import routerShoes from './router/shoes';
 import routerAuth from './router/auth';
+import { default as V1SwaggerDocs } from './helpers/swagger';
 
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
@@ -11,27 +12,13 @@ app.use(cors());
 app.use(morgan('dev'));
 
 //routes
-app.use('/shoes', routerShoes);
-app.use('/auth', routerAuth);
+app.use('/api/v1/shoes', routerShoes);
+app.use('/api/v1/auth', routerAuth);
+// swagger docs
+V1SwaggerDocs(app, PORT);
 
-const templateMsg = (msg: string) => `<h1>${msg}</h1>`;
+//redirect all routes
+app.use((req, res) => res.redirect('/api/v1/docs'));
 
-app.get('/', (req: Request, res: Response) => {
-  res.send(
-    templateMsg(
-      'What up bro here don\'t check the,\n <a href="https://github.com/Mod8124/ecomerce-node.git">documention'
-    )
-  );
-});
-
-app.use((req, res) =>
-  res
-    .status(404)
-    .send(
-      templateMsg(
-        'Error <span style="color:red;">404</span> page dont\'t found'
-      )
-    )
-);
-
-app.listen(PORT, () => console.log('server on', `localhost:${PORT}`));
+//server on
+app.listen(PORT, () => console.log('server on', `http://localhost:${PORT}/api/v1/shoes`));

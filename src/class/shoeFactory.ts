@@ -6,7 +6,8 @@ export const shoes: IShoe[] = [];
 
 class ShoeFactory implements IShoeFactory {
   create(img: string) {
-    return new Shoe(shoes.length, img);
+    const newShoe = new Shoe(shoes.length, img);
+    shoes.push(newShoe);
   }
 }
 

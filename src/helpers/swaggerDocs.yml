@@ -1,0 +1,250 @@
+# tags
+
+tags:
+  - name: shoes
+    description: Operation about shoes
+  - name: user
+    description: Operations about user
+
+# components
+
+components:
+  schemas:
+    Shoes:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 0
+        name:
+          type: string
+          example: Fall Limited Edition Sneakers
+        price:
+          type: string
+          example: '250.00'
+        image:
+          type: string
+          example: https://images.unsplash.com/photo-1603808033192-082d6919d3e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80
+        description:
+          type: string
+          example: These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.
+        discount:
+          type: number
+          example: 50
+        endprice:
+          type: string
+          example: '125.00'
+        company:
+          type: string
+          example: FUTURE COMPANY
+        genre:
+          type: string
+          example: Men
+        type:
+          type: string
+          example: Running
+
+    error:
+      type: object
+      properties:
+        status:
+          type: string
+          example: failed
+        message:
+          type: string
+          example: Sorry mate, something fail
+        resolution:
+          type: string
+          example: You can try again XD
+
+# paths
+
+paths:
+  /api/v1/shoes:
+    get:
+      tags:
+        - shoes
+      summary: Get all 30 shoes
+      description: return all shoes it's paginate by limit of 15 if you want every use query limit=30
+      parameters:
+        - name: sort=price
+          in: query
+          description: sort all shoes by price top to lower cost
+          required: false
+          schema:
+            type: string
+            example: /api/v1/shoes?sort=price
+        - name: sort= -price
+          in: query
+          description: sort all shoes by price lower to top cost
+          required: false
+          schema:
+            type: string
+            example: /api/v1/shoes?sort=price
+        - name: page
+          in: query
+          description: paginate all shoes the number of pages depends of the limit by default it's 15 length and max it's 30
+          required: false
+          schema:
+            type: string
+            example: /api/v1/shoes?page=2
+        - name: limit
+          in: query
+          description: limit of the return shoes by default 15 max(30)
+          required: false
+          schema:
+            type: string
+            example: /api/v1/shoes?limit=30
+      responses:
+        200:
+          description: Successful get all 30 shoes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Ok
+                  total_shoes:
+                    type: number
+                    example: 30
+                  pagination:
+                    type: object
+                    properties:
+                      prev:
+                        type: object
+                      next:
+                        type: object
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Shoes'
+        404:
+          description: failed on get all shoes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+
+  /api/v1/shoes/{shoeName}:
+    get:
+      tags:
+        - shoes
+      summary: Find shoe by name
+      description: Returns a single shoe by name
+      parameters:
+        - name: shoeName
+          in: path
+          description: Name of shoe to return
+          required: true
+          schema:
+            type: string
+            example: /api/v1/shoes/Fall Limited Edition Sneakers
+      responses:
+        200:
+          description: Successful get all 30 shoes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Ok
+                  total_shoes:
+                    type: number
+                    example: 30
+                  pagination:
+                    type: object
+                    properties:
+                      prev:
+                        type: object
+                      next:
+                        type: object
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Shoes'
+        404:
+          description: failed on get all shoes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+
+  /api/v1/shoes/women:
+    get:
+      tags:
+        - shoes
+      summary: Get all shoes by woman genre
+      description: return all shoes by woman genre
+      responses:
+        200:
+          description: Successful get all shoes by women genre (schema is just a example only change the genre)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Ok
+                  total_shoes:
+                    type: number
+                    example: 30
+                  pagination:
+                    type: object
+                    properties:
+                      prev:
+                        type: object
+                      next:
+                        type: object
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Shoes'
+        404:
+          description: failed on get all shoes by women
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+
+  /api/v1/shoes/men:
+    get:
+      tags:
+        - shoes
+      summary: Get all shoes by men genre
+      description: return all shoes by men genre
+      responses:
+        200:
+          description: Successful get all shoes by women genre (schema is just a example only change the genre)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Ok
+                  total_shoes:
+                    type: number
+                    example: 30
+                  pagination:
+                    type: object
+                    properties:
+                      prev:
+                        type: object
+                      next:
+                        type: object
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Shoes'
+        404:
+          description: failed on get all shoes by men
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'

@@ -8,7 +8,7 @@ export interface IShoe {
   image: string;
   description: string;
   discount: number;
-  endprice: any;
+  endprice: string;
   company: string;
   genre: string;
   type: string;
@@ -16,5 +16,19 @@ export interface IShoe {
 
 export type IData = Pick<IShoe, 'id' | 'name' | 'price' | 'image' | 'description'>;
 export interface IShoeFactory {
-  create(img: string): IShoe;
+  create(img: string): void;
+}
+
+export interface IError {
+  message: string;
+  resolution: string;
+}
+
+export interface IPagination {
+  prev: {
+    [key: string]: number;
+  };
+  next: {
+    [key: string]: number;
+  };
 }

@@ -1,11 +1,16 @@
 import { TArrayString, TArrayNumber } from '../interface/interface';
 
 const featured = () => {
-  const prices: TArrayNumber = [250.0, 50, 125.0];
-  const genres: TArrayString = ['Men', 'Women'];
-  const seasons: TArrayString = ['Winter', 'Spring', 'Summer', 'Fall'];
-  const types: TArrayString = ['Running', 'Soccer', 'Lifestyle', 'Training', 'Skateboarding', 'Walking', 'classic'];
-  const brands: TArrayString = ['FUTURE COMPANY', 'SNEAKER COMPANY', 'NEON COMPANY', 'RS-2K', 'CANVERSE'];
+  const PRICES: TArrayNumber = [250.0, 50, 125.0];
+  const GENRES: TArrayString = ['Men', 'Women'];
+  const SEASONS: TArrayString = ['Winter', 'Spring', 'Summer', 'Fall'];
+  const TYPES: TArrayString = ['Running', 'Soccer', 'Lifestyle', 'Training', 'Skateboarding', 'Walking', 'classic'];
+  const BRANDS: TArrayString = ['FUTURE COMPANY', 'SNEAKER COMPANY', 'NEON COMPANY', 'RS-2K', 'CANVERSE'];
+  const REQUEST_TYPE_STATUS_CODE = {
+    notFound: 404,
+    rateLimit: 429,
+    serverError: 500,
+  };
 
   const imgsLinks: string[] = [
     'https://images.unsplash.com/photo-1605034313761-73ea4a0cfbf3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
@@ -40,11 +45,12 @@ const featured = () => {
   ];
 
   return {
-    prices,
-    genres,
-    seasons,
-    types,
-    brands,
+    PRICES,
+    GENRES,
+    SEASONS,
+    TYPES,
+    BRANDS,
+    REQUEST_TYPE_STATUS_CODE,
     imgsLinks,
   };
 };
