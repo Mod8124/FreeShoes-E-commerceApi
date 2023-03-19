@@ -1,10 +1,10 @@
 import { Router } from 'express';
-const router = Router();
+const shoesRouter = Router();
 import { index, getByWomen, getByMen, detail } from '../controller/shoes';
 
-router.get('/', index);
-router.get('/women', getByWomen);
-router.get('/men', getByMen);
-router.get('/:shoeName', detail);
+shoesRouter.get('/', index);
+shoesRouter.get('/women', getByWomen);
+shoesRouter.get('/men', getByMen);
+shoesRouter.get('/:shoeName', detail);
 
-export default router;
+export default shoesRouter;

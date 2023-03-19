@@ -1,19 +1,24 @@
-import express, { Request, Response, Express } from 'express';
+import express, { Express } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import routerShoes from './router/shoes';
-import routerAuth from './router/auth';
+import shoesRouter from './router/shoes';
+import userRouter from './router/user';
 import { default as V1SwaggerDocs } from './helpers/swagger';
+import ConnectMongoDb from './helpers/connection/connectMongoDB';
+import cookieParser from 'cookie-parser';
 
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
 
+//set up
 app.use(cors());
 app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(express.json());
 
 //routes
-app.use('/api/v1/shoes', routerShoes);
-app.use('/api/v1/auth', routerAuth);
+app.use('/api/v1/shoes', shoesRouter);
+app.use('/api/v1/user', userRouter);
 // swagger docs
 V1SwaggerDocs(app, PORT);
 
@@ -21,4 +26,7 @@ V1SwaggerDocs(app, PORT);
 app.use((req, res) => res.redirect('/api/v1/docs'));
 
 //server on
-app.listen(PORT, () => console.log('server on', `http://localhost:${PORT}/api/v1/shoes`));
+app.listen(PORT, () => {
+  ConnectMongoDb();
+  console.log('server on', `http://localhost:${PORT}/api/v1/shoes`);
+});

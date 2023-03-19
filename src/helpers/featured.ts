@@ -8,8 +8,12 @@ const featured = () => {
   const BRANDS: TArrayString = ['FUTURE COMPANY', 'SNEAKER COMPANY', 'NEON COMPANY', 'RS-2K', 'CANVERSE'];
   const REQUEST_TYPE_STATUS_CODE = {
     notFound: 404,
+    Unauthorized: 401,
     rateLimit: 429,
     serverError: 500,
+    ok: 200,
+    created: 201,
+    accepted: 202,
   };
 
   const imgsLinks: string[] = [

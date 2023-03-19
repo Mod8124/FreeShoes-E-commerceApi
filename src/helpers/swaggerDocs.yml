@@ -248,3 +248,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+
+  # path user
+  /api/v1/user/signup:
+    post:
+      tags:
+        - user
+      summary: Register the user
+      description: return the user email and cookie
+
+  /api/v1/user/login:
+    post:
+      tags:
+        - user
+      summary: Log in
+      description: Check if the user is register or established again the cookie
