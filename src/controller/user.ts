@@ -7,8 +7,8 @@ import { handleErrors } from '../helpers/error';
 const { REQUEST_TYPE_STATUS_CODE } = featured();
 const maxDay = 3 * 24 * 60 * 60;
 
-const createToken = (email: string) => {
-  return jwt.sign({ email }, config.JWT_KEY, { expiresIn: maxDay });
+const createToken = (_id: string) => {
+  return jwt.sign({ _id }, config.JWT_KEY, { expiresIn: maxDay });
 };
 
 export const logIn = async (req: Request, res: Response) => {
