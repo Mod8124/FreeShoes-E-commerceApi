@@ -1,4 +1,4 @@
-import mongoose, { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 
 export type TArrayString = string[];
 export type TArrayNumber = number[];
@@ -12,7 +12,7 @@ export interface IShoe {
   discount: number;
   endprice: string;
   company: string;
-  genre: string;
+  gender: string;
   type: string;
 }
 
@@ -30,18 +30,26 @@ export interface IPagination {
   };
 }
 
-// auth
+// model - auth
 export interface IUserSchema {
   _id: string;
   email: string;
   password: string;
-  avatar: string;
 }
 
 export interface UserModel extends Model<IUserSchema> {
   signup(email: string, password: string): IUserSchema;
   login(email: string, password: string): IUserSchema;
 }
+
+// model - favorite
+
+type TFavorites = Pick<IShoe, 'id' | 'name' | 'image' | 'company'>;
+export interface IFavoriteSchema {
+  user: string;
+  favorites: TFavorites[];
+}
+export interface FavoriteModel extends Model<IFavoriteSchema> {}
 
 //errors
 export interface IError {

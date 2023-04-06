@@ -1,8 +1,8 @@
 import randomNumber from '../helpers/randomNumber';
 import featured from '../helpers/featured';
 import { IShoe } from '../interface/interface';
-const { GENRES, SEASONS, TYPES, BRANDS } = featured();
-const randomGenre = (): string => GENRES[randomNumber(2)];
+const { GENDER, SEASONS, TYPES, BRANDS } = featured();
+const randomGender = (): string => GENDER[randomNumber(2)];
 const randomSeason = (): string => SEASONS[randomNumber(SEASONS.length)];
 const randomTypes = (): string => TYPES[randomNumber(TYPES.length)];
 const randomBrands = (): string => BRANDS[randomNumber(BRANDS.length)];
@@ -16,7 +16,7 @@ class Shoe implements IShoe {
   public discount: number;
   public endprice: any;
   public company: string;
-  public genre: string;
+  public gender: string;
   public type: string;
 
   constructor(id: number, image: string) {
@@ -29,7 +29,7 @@ class Shoe implements IShoe {
     this.discount = randomNumber(100);
     this.endprice = this.calculateEndPrice();
     this.company = randomBrands();
-    this.genre = randomGenre();
+    this.gender = randomGender();
     this.type = randomTypes();
   }
 

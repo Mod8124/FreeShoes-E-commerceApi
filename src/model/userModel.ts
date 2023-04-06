@@ -18,17 +18,10 @@ const userSchema = new schema<IUserSchema, UserModel>({
     minlength: [6, 'Min password length is 6 char'],
     validate: [validator.isStrongPassword, 'Password not strong enough'],
   },
-  avatar: {
-    type: String,
-    required: false,
-    unique: false,
-  },
 });
 
 userSchema.pre('save', async function (next) {
-  let ULR_AVATAR = 'https://unavatar.io/';
   const salt = await bcrypt.genSalt(10);
-  this.avatar = ULR_AVATAR += this.email;
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
@@ -49,6 +42,6 @@ userSchema.statics.login = async function (email: string, password: string) {
   return user;
 };
 
-const User = model<IUserSchema, UserModel>('user', userSchema);
+const User = model<IUserSchema, UserModel>('User', userSchema);
 
 export default User;

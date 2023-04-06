@@ -2,9 +2,9 @@ import { TArrayString, TArrayNumber } from '../interface/interface';
 
 const featured = () => {
   const PRICES: TArrayNumber = [250.0, 50, 125.0];
-  const GENRES: TArrayString = ['Men', 'Women'];
+  const GENDER: TArrayString = ['Men', 'Women'];
   const SEASONS: TArrayString = ['Winter', 'Spring', 'Summer', 'Fall'];
-  const TYPES: TArrayString = ['Running', 'Soccer', 'Lifestyle', 'Training', 'Skateboarding', 'Walking', 'classic'];
+  const TYPES: TArrayString = ['Running', 'Soccer', 'Lifestyle', 'Training', 'Skateboarding', 'Walking', 'Classic'];
   const BRANDS: TArrayString = ['FUTURE COMPANY', 'SNEAKER COMPANY', 'NEON COMPANY', 'RS-2K', 'CANVERSE'];
   const REQUEST_TYPE_STATUS_CODE = {
     notFound: 404,
@@ -50,7 +50,7 @@ const featured = () => {
 
   return {
     PRICES,
-    GENRES,
+    GENDER,
     SEASONS,
     TYPES,
     BRANDS,

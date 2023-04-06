@@ -1,7 +1,7 @@
 import randomNumber from '../helpers/randomNumber';
 import ShoeFactory, { shoes } from '../class/shoeFactory';
 import featured from '../helpers/featured';
-const { PRICES, GENRES, imgsLinks } = featured();
+const { PRICES, GENDER, imgsLinks } = featured();
 import { IShoe } from '../interface/interface';
 
 const shoesDefault: IShoe = {
@@ -15,7 +15,7 @@ const shoesDefault: IShoe = {
   discount: PRICES[1],
   endprice: '125.00',
   company: 'SNEAKER COMPANY',
-  genre: GENRES[randomNumber(2)],
+  gender: GENDER[randomNumber(2)],
   type: 'Lifestyle',
 };
 

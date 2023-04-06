@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Error } from '../helpers/error';
-import { getAllShoes, getAllShoesByGenre, getShoeByName } from '../services/shoesServices';
+import { getAllShoes, getAllShoesByGenre, getShoeById } from '../services/shoesServices';
 import { IPagination } from '../interface/interface';
 
 // get all shoes
@@ -40,11 +40,18 @@ export const index = async (req: Request, res: Response) => {
 
 // get single shoe
 export const detail = async (req: Request, res: Response) => {
-  const { shoeName } = req.params;
+  const { shoeId } = req.params;
+  const recommendation = req.query.recommendation || false;
   try {
-    if (shoeName) {
-      const shoe = getShoeByName(shoeName);
-      res.status(200).json({ status: 'Ok', total_shoes: shoe.length, data: shoe });
+    if (shoeId) {
+      const [shoe, recommendations] = getShoeById(shoeId, Boolean(recommendation));
+
+      res.status(200).json({
+        status: 'Ok',
+        total_shoes: 1,
+        data: [shoe],
+        recommendations: recommendations ? recommendations : [],
+      });
     }
   } catch (err) {
     res.status(404).json({ status: 'failed', ...Error, err });

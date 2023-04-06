@@ -3,22 +3,20 @@ import User from '../model/userModel';
 import config from '../config/config';
 import { Request, Response, NextFunction } from 'express';
 
-export const checkUser = (req: Request, res: Response, next: NextFunction) => {
+export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.jwt;
 
+  // check json web token exists & is verified
   if (token) {
-    jwt.verify(token, config.JWT_KEY, async (err: any, decodedToken: any) => {
+    jwt.verify(token, config.JWT_KEY, (err: any) => {
       if (err) {
-        res.locals.user = null;
-        next();
+        console.log(err.message);
+        res.status(401).json({ status: 'failed', message: 'Invalid token' });
       } else {
-        let user = await User.findById(decodedToken.id);
-        res.locals.user = user;
         next();
       }
     });
   } else {
-    res.locals.user = null;
-    next();
+    return res.status(401).json({ status: 'failed', message: 'Unauthorized' });
   }
 };

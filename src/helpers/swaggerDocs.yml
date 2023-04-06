@@ -37,7 +37,7 @@ components:
         company:
           type: string
           example: FUTURE COMPANY
-        genre:
+        gender:
           type: string
           example: Men
         type:
@@ -141,6 +141,14 @@ paths:
           schema:
             type: string
             example: /api/v1/shoes/Fall Limited Edition Sneakers
+        - name: recommendation
+          in: query
+          description: return recommendations about another shoes the length is 4
+          required: false
+          schema:
+            type: boolean
+            example: /api/v1/shoes/Fall%20Limited%20Edition%20Sneakers?recommendation=true
+
       responses:
         200:
           description: Successful get all 30 shoes
@@ -166,6 +174,12 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Shoes'
+                  recommendations:
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+
         404:
           description: failed on get all shoes
           content:
