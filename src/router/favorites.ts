@@ -4,6 +4,6 @@ import { getFavorites, createFavorite, deleteFavorite } from '../controller/favo
 
 favoritesRouter.get('/', getFavorites);
 favoritesRouter.post('/', createFavorite);
-favoritesRouter.post('/:id', deleteFavorite);
+favoritesRouter.delete('/:id', deleteFavorite);
 
 export default favoritesRouter;

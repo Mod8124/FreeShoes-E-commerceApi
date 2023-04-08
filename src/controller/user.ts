@@ -38,14 +38,6 @@ export const signUp = async (req: Request, res: Response) => {
   }
 };
 
-export const updateFavorites = async (req: Request, res: Response) => {
-  try {
-    res.send('works');
-  } catch (err) {
-    res.send('failed');
-  }
-};
-
 export const logout = async (req: Request, res: Response) => {
   res.cookie('jwt', '', { maxAge: 1, httpOnly: true });
   res.status(REQUEST_TYPE_STATUS_CODE.ok).json({ status: 'Ok' });
