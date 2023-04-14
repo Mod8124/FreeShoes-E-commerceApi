@@ -5,7 +5,6 @@ import shoesRouter from './router/shoes';
 import userRouter from './router/user';
 import { default as V1SwaggerDocs } from './helpers/swagger';
 import ConnectMongoDb from './helpers/connection/connectMongoDB';
-import cookieParser from 'cookie-parser';
 import favoritesRouter from './router/favorites';
 
 const app: Express = express();
@@ -14,7 +13,6 @@ const PORT = process.env.PORT || 3000;
 //set up
 app.use(cors());
 app.use(morgan('dev'));
-app.use(cookieParser());
 app.use(express.json());
 
 //routes

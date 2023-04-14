@@ -1,42 +1,82 @@
-import { IShoe } from '../interface/interface';
-import shoes from '../shoes/shoes';
-import randomNumber from '../helpers/randomNumber';
+import { Request, Response } from 'express';
+import { Error } from '../helpers/error';
+import { getAllShoes, getAllShoesByGenre, getShoeById } from '../helpers/shoesFilters';
+import { IPagination } from '../interface/interface';
 
-// get random shoes max of 4 the index of the number are aleatory also doesn't return the same shoes detail
-const getRecommendedShoes = (shoes: IShoe[], originalShoe: IShoe) => {
-  const numShoes = shoes.length;
-  const recommendedShoes: IShoe[] = [];
-  const usedIndexes: Set<number> = new Set();
-  while (recommendedShoes.length < 4) {
-    const randomIndex = randomNumber(numShoes);
-    if (!usedIndexes.has(randomIndex)) {
-      if (originalShoe !== shoes[randomIndex]) {
-        recommendedShoes.push(shoes[randomIndex]);
-        usedIndexes.add(randomIndex);
-      }
+export const getShoes = async (req: Request, res: Response) => {
+  const { sort } = req.query;
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 15;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  let pagination: IPagination = {
+    prev: {},
+    next: {},
+  };
+
+  try {
+    const allShoes = typeof sort === 'string' ? getAllShoes(sort) : getAllShoes(null);
+    if (startIndex > 0) {
+      pagination['prev'] = {
+        page: page - 1,
+        limit,
+      };
     }
+
+    if (endIndex < allShoes.length) {
+      pagination['next'] = {
+        page: page + 1,
+        limit,
+      };
+    }
+    const paginationShoes = allShoes.slice(startIndex, endIndex);
+    res.status(200).send({ status: 'ok', total_shoes: allShoes.length, pagination, data: paginationShoes });
+  } catch (err) {
+    res.status(404).json({ status: 'failed', ...Error, err });
   }
-  return recommendedShoes;
 };
 
-export const getAllShoes = (sort: string | null) => {
-  const byEndPrice = [...shoes].sort((a: IShoe, b: IShoe) => {
-    return sort === 'price'
-      ? parseFloat(b.endprice) - parseFloat(a.endprice)
-      : parseFloat(a.endprice) - parseFloat(b.endprice);
-  });
-  return sort ? byEndPrice : shoes;
-};
+const getSingleShoe = async (req: Request, res: Response) => {
+  const { shoeId } = req.params;
+  const recommendation = req.query.recommendation || false;
+  try {
+    if (shoeId) {
+      const [shoe, recommendations] = getShoeById(shoeId, Boolean(recommendation));
 
-export const getAllShoesByGenre = (gender: string) => {
-  return shoes.filter((shoe: IShoe) => shoe.gender === gender);
-};
-
-export const getShoeById = (shoeId: string, recommendations: boolean) => {
-  const shoe = [...shoes].filter((shoe: IShoe) => shoe.id === Number(shoeId));
-  const recommendationsShoes = getRecommendedShoes(shoes, shoe[0]);
-  if (recommendations) {
-    return [shoe[0], recommendationsShoes];
+      res.status(200).json({
+        status: 'Ok',
+        total_shoes: 1,
+        data: [shoe],
+        recommendations: recommendations ? recommendations : [],
+      });
+    }
+  } catch (err) {
+    res.status(404).json({ status: 'failed', ...Error, err });
   }
-  return [shoe[0]];
+};
+
+const getShoesByMen = async (req: Request, res: Response) => {
+  try {
+    const shoesByWomen = getAllShoesByGenre('Women');
+    res.status(200).json({ status: 'OK', total_shoes: shoesByWomen.length, data: shoesByWomen });
+  } catch (err) {
+    res.status(404).json({ status: 'failed', ...Error, err });
+  }
+};
+
+const getShoesByWomen = async (req: Request, res: Response) => {
+  try {
+    const shoesByMen = getAllShoesByGenre('Men');
+    res.status(200).json({ status: 'Ok', total_shoes: shoesByMen.length, data: shoesByMen });
+  } catch (err) {
+    res.status(404).json({ status: 'failed', data: { ...Error, err } });
+  }
+};
+
+export default {
+  getShoes,
+  getSingleShoe,
+  getShoesByMen,
+  getShoesByWomen,
 };
