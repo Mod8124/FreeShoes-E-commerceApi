@@ -1,13 +1,15 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+import { MyRequest } from '../Middleware/requireUser';
+import favoritesServices from '../services/favoritesServices';
 
-export const getFavorites = async (req: Request, res: Response) => {
-  res.send('all favorites Shoes');
+export const getFavorites = async (req: MyRequest, res: Response) => {
+  favoritesServices.getFavorites(req, res);
 };
 
-export const createFavorite = (req: Request, res: Response) => {
-  res.send('add favorite shoe');
+export const createFavorite = async (req: MyRequest, res: Response) => {
+  favoritesServices.addFavorites(req, res);
 };
 
-export const deleteFavorite = (req: Request, res: Response) => {
-  res.send('delete shoe');
+export const deleteFavorite = async (req: MyRequest, res: Response) => {
+  favoritesServices.deleteFavorite(req, res);
 };

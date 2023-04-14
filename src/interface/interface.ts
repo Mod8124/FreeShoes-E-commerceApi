@@ -1,4 +1,5 @@
 import { Model } from 'mongoose';
+import { Request } from 'express';
 
 export type TArrayString = string[];
 export type TArrayNumber = number[];
@@ -43,12 +44,12 @@ export interface UserModel extends Model<IUserSchema> {
 }
 
 // model - favorite
-
 type TFavorites = Pick<IShoe, 'id' | 'name' | 'image' | 'company'>;
 export interface IFavoriteSchema {
-  user: string;
+  user_id: string;
   favorites: TFavorites[];
 }
+
 export interface FavoriteModel extends Model<IFavoriteSchema> {}
 
 //errors
@@ -73,4 +74,9 @@ export interface IErrorProperties {
   path: string;
   value: string;
   reason: undefined;
+}
+
+//request
+export interface IRequestWithUser extends Request {
+  user?: IUserSchema;
 }

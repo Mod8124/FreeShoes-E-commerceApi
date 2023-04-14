@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 import { IFavoriteSchema, FavoriteModel } from '../interface/interface';
 
 const favoritesSchema = new schema<IFavoriteSchema, FavoriteModel>({
-  user: {
+  user_id: {
     type: String,
     required: [true, 'user is required'],
     unique: true,

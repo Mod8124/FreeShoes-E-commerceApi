@@ -1,27 +1,38 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+import { IncomingHttpHeaders } from 'http';
+import config from '../config/config';
+import User from '../model/userModel';
+import jwt from 'jsonwebtoken';
+import featured from '../helpers/featured';
+import { IRequestWithUser } from '../interface/interface';
+const { REQUEST_TYPE_STATUS_CODE } = featured();
 
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
+export type MyRequest = IRequestWithUser & { headers: IncomingHttpHeaders & { authorization?: string } };
 
-const requireAuth = async (req: Request, res: Response, next: NextFunction) => {
+export const requireAuth = async (req: MyRequest, res: Response, next: NextFunction) => {
   // verify user is authenticated
-  const { authorization } = req.headers;
+
+  const authorization = req.headers?.authorization;
 
   if (!authorization) {
-    return res.status(401).json({ error: 'Authorization token required' });
+    return res.status(REQUEST_TYPE_STATUS_CODE.Unauthorized).json({ error: 'Authorization token required' });
   }
 
   const token = authorization.split(' ')[1];
 
   try {
-    const { _id } = jwt.verify(token, process.env.SECRET);
-
-    req.user = await User.findOne({ _id }).select('_id');
+    const id = jwt.verify(token, config.JWT_KEY);
+    const user = await User.findOne({ _id: id }).select('_id');
+    if (user) req.user = user;
     next();
   } catch (error) {
-    console.log(error);
-    res.status(401).json({ error: 'Request is not authorized' });
+    if (error instanceof jwt.TokenExpiredError) {
+      // handle expired token error
+      res.status(REQUEST_TYPE_STATUS_CODE.Unauthorized).json({ error: 'Token has expired' });
+    } else {
+      // handle other errors
+      console.log(error);
+      res.status(REQUEST_TYPE_STATUS_CODE.Unauthorized).json({ error: 'Request is not authorized' });
+    }
   }
 };
-
-module.exports = requireAuth;

@@ -5,6 +5,8 @@ tags:
     description: Operation about shoes
   - name: user
     description: Operations about user
+  - name: favorites
+    description: Operations about favorites shoes by auth user
 
 # components
 
@@ -56,6 +58,16 @@ components:
         resolution:
           type: string
           example: You can try again XD
+
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'example@gmail.com'
+        password:
+          type: string
+          example: 'mypassword123)'
 
 # paths
 
@@ -269,7 +281,44 @@ paths:
       tags:
         - user
       summary: Register the user
-      description: return the user email and cookie
+      description: Register the user in the database
+      requestBody:
+        description: All files are required* the password has to be strong**
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: if the auth is completed, set up a new cookie & token that expires in 3 days
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'ok'
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        example: 'example@gmail.com'
+                      token:
+                        type: string
+                        example: 'asdf;asjdflkasjfdlkasjfdkasjdasdasfdf;a'
+        400:
+          description: if failed auth, the user isn't register in the database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'failed'
 
   /api/v1/user/login:
     post:
@@ -277,3 +326,40 @@ paths:
         - user
       summary: Log in
       description: Check if the user is register or established again the cookie
+      requestBody:
+        description: All files are required* the password has to be strong**
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: If the user is register, set up a new the cookie and token that expires in 3 days
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'ok'
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        example: 'example@gmail.com'
+                      token:
+                        type: string
+                        example: 'asdf;asjdflkasjfdlkasjfdkasjdasdasfdf;a'
+        400:
+          description: if failed auth, the cookie & token doesn't set up for 3 days
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'failed'
