@@ -7,6 +7,6 @@ favoritesRouter.use(requireAuth);
 
 favoritesRouter.get('/', getFavorites);
 favoritesRouter.post('/', createFavorite);
-favoritesRouter.delete('/:id', deleteFavorite);
+favoritesRouter.delete('/', deleteFavorite);
 
 export default favoritesRouter;

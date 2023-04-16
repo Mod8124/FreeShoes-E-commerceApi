@@ -6,7 +6,7 @@ tags:
   - name: user
     description: Operations about user
   - name: favorites
-    description: Operations about favorites shoes by auth user
+    description: Operations about favorites shoes by auth user for this router is require token you have to send it in the header
 
 # components
 
@@ -64,10 +64,60 @@ components:
       properties:
         email:
           type: string
-          example: 'example@gmail.com'
+          example: example@gmail.com
         password:
           type: string
-          example: 'mypassword123)'
+          example: mypassword123)
+
+    Favorites:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        name:
+          type: string
+          example: Sneaker 1
+        image:
+          type: string
+          example: https://images.unsplash.com/photo-1595461135849-bf08893fdc2c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1468&q=80
+        company:
+          type: string
+          example: FUTURE COMPANY
+        _id:
+          type: string
+          example: asdfasdf1235
+
+    FavoritesData:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+        total_favorites:
+          type: number
+          example: 1
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              example: asdfasdfas
+            favorites:
+              type: array
+              items:
+                $ref: '#/components/schemas/Favorites'
+
+    FavoritesDataError:
+      type: object
+      properties:
+        status:
+          type: string
+          example: failed
+        error:
+          $ref: '#/components/schemas/error'
+        err:
+          type: object
 
 # paths
 
@@ -363,3 +413,81 @@ paths:
                   status:
                     type: string
                     example: 'failed'
+
+  /api/v1/favorites:
+    get:
+      tags:
+        - favorites
+      summary: Get all favorites from one user
+      description: Return all favorites from one user
+      responses:
+        200:
+          description: Successful on get All favorites from one user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoritesData'
+        400:
+          description: Failed on get all Favorites from one user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoritesDataError'
+    post:
+      tags:
+        - favorites
+      summary: Add a favorites to the current list user's favorites
+      description: return all favorites from the current list (this routes required id, name, image, company)
+      requestBody:
+        description: All files are required**(id, name, image, company) all are provides from the shoes collection
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Favorites'
+      responses:
+        200:
+          description: Successful to add a new favorite to favorite Model return All favorites from one user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoritesData'
+        400:
+          description: Failed to add a new Favorites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoritesDataError'
+
+    delete:
+      tags:
+        - favorites
+      summary: delete one favorite from user's favorites collection
+      description: delete one favorite from user's favorites collection
+      requestBody:
+        description: Deleting one favorite you need that id of favorites, and the _id of favoriteId on model
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: asdfasdsf
+                favoriteId:
+                  type: string
+                  example: asdfsafdasasdfas
+        responses:
+        200:
+          description: Successful to add a new favorite to favorite Model return All favorites from one user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoritesData'
+        400:
+          description: Failed to add a new Favorites
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FavoritesDataError'

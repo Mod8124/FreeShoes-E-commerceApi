@@ -11,7 +11,7 @@ const getFavorites = async (req: MyRequest, res: Response) => {
     if (!favorites) {
       return res
         .status(REQUEST_TYPE_STATUS_CODE.ok)
-        .json({ status: 'ok', total_favorites: 0, data: { favorites: [] } });
+        .json({ status: 'ok', total_favorites: 0, data: { id: '', favorites: [] } });
     }
     res.status(REQUEST_TYPE_STATUS_CODE.ok).json({
       status: 'OK',
@@ -19,7 +19,7 @@ const getFavorites = async (req: MyRequest, res: Response) => {
       data: { id: favorites._id, favorites: favorites.favorites },
     });
   } catch (err) {
-    res.status(REQUEST_TYPE_STATUS_CODE.notFound).json({ status: 'failed', ...Error, err });
+    res.status(REQUEST_TYPE_STATUS_CODE.notFound).json({ status: 'failed', Error, err });
   }
 };
 
@@ -68,15 +68,17 @@ const addFavorites = async (req: MyRequest, res: Response) => {
 };
 
 const deleteFavorite = async (req: MyRequest, res: Response) => {
-  const id = req.query.id;
-  const favoriteId = req.body;
+  const id = req.body.id;
+  const favoriteId = req.body.favoriteId;
 
   try {
     const updatedFavorites = await Favorite.findOneAndUpdate(
       { _id: id },
-      { $pull: { favorites: { id: favoriteId } } },
+      { $pull: { favorites: { _id: favoriteId } } },
       { new: true }
     );
+
+    console.log(updatedFavorites);
 
     if (!updatedFavorites) {
       return res.status(REQUEST_TYPE_STATUS_CODE.notFound).json({ status: 'failed', error: 'Favorite not found' });
