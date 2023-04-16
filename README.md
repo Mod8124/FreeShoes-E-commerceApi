@@ -31,7 +31,7 @@ Sneaker Collection is a project that started because i couldn't find any good re
 
 <h2>Credits</h2>
 
-<p>Most of the content provides images comes from <a href="https://unsplash.com">Unplash</a> </p>
+<p>Most of the images comes from <a href="https://unsplash.com">Unplash</a> </p>
 
 <h2>Images</h2>
 
