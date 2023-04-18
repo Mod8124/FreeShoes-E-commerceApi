@@ -14,11 +14,11 @@ const options: swaggerJSDoc.Options = {
     servers: [
       {
         url: 'https://freeshoesapi-production.up.railway.app/api/v1/',
-        description: 'go to /docs for see more',
+        description: 'production server',
       },
       {
-        url: 'http://localhost:3000/api/v1/shoes',
-        description: 'Production server',
+        url: 'http://localhost:3000/api/v1/',
+        description: 'development server',
       },
     ],
   },
