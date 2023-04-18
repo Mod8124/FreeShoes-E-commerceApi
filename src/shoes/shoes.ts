@@ -5,7 +5,7 @@ const { PRICES, GENDER, imgsLinks } = featured();
 import { IShoe } from '../interface/interface';
 
 const shoesDefault: IShoe = {
-  id: 0,
+  id: 1,
   name: 'Fall Limited Edition Sneakers',
   price: '255.00',
   image:
