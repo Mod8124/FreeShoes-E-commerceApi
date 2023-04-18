@@ -16,11 +16,10 @@ const logIn = async (req: Request, res: Response) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    console.log(token);
     res.status(REQUEST_TYPE_STATUS_CODE.ok).json({ status: 'Ok', user: { email, token } });
   } catch (err: any) {
     const errors = handleErrors(err.message);
-    setTimeout(() => res.status(REQUEST_TYPE_STATUS_CODE.Unauthorized).json({ status: 'unauthorized', errors }), 7000);
+    res.status(REQUEST_TYPE_STATUS_CODE.Unauthorized).json({ status: 'unauthorized', errors });
   }
 };
 
