@@ -5,7 +5,7 @@
   <h2>shoes collections API</h2>
   <p>A free API serving a shoes collection
     <br />
-    <a href=""><strong>Explore the api »</strong></a>
+    <a href="https://freeshoesapi-production.up.railway.app/api/v1/docs/"><strong>Explore the api »</strong></a>
   <br />
     <br />
     <a href="https://github.com/Mod8124/freeShoesApi/discussions">Shoes request</a>
