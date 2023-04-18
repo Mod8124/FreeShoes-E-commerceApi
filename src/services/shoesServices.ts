@@ -31,7 +31,7 @@ export const getShoes = async (req: Request, res: Response) => {
       };
     }
     const paginationShoes = allShoes.slice(startIndex, endIndex);
-    res.status(200).send({ status: 'ok', total_shoes: allShoes.length, pagination, data: paginationShoes });
+    res.status(200).json({ status: 'ok', total_shoes: allShoes.length, pagination, data: paginationShoes });
   } catch (err) {
     res.status(404).json({ status: 'failed', ...Error, err });
   }
