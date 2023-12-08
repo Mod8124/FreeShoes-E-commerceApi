@@ -26,7 +26,7 @@
 <h2>Overview</h2>
 
 <p>
-Sneaker Collection is a project that started because i couldn't find any good resources about e-commerce so I created to provides some basic shoes that you can show, add, and see details about shoe. This api provides a shoes collection by default the api is in pagination by limit of 15 and max by 30(whole collection), more info on **/api/v1/docs**
+Sneaker Collection is a project that started because i couldn't find any good resources about e-commerce so I created to provide some basic shoes that you can show, add, and see details about shoe. This api provides a shoes collection by default the api is in pagination by limit of 15 and max by 30(whole collection), further info on <a href="https://freeshoesapi-production.up.railway.app/api/v1/docs/">SHOES API URL</a>
 </p>
 
 <h2>Credits</h2>
